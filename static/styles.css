@@ -1,113 +1,146 @@
+/*classes*/
+.container{
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    
+}
+
+.log{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 10px 10px 0px 0px;
+    border: 3px solid #000;
+    background: #FFF;
+    width: 391px; /* Reduced from 489px */
+    height: 71px;
+    flex-shrink: 0; 
+    padding: 12px 12px;
+}
+
+.reset{
+    align-self: center;
+    width: 103px;
+    height: 42px;
+    border: 3px solid #000;
+    background-color: rgba( 196, 124, 255, 0.75);
+    border-radius: 25px 25px 25px 25px;
+    stroke-width: 3px;
+    stroke: #000;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.50));
+    color: #000;
+    font-family: Helvetica;
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.log-text{
+    color: #000;
+    font-family: Helvetica;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.log-body{
+   
+    align-self: flex-start;
+    width: 391px;
+    height: 517px;
+    border-radius: 0px 0px 35px 35px;
+    border: 3px solid #000;
+    background: linear-gradient(160deg, #FBFBFB 6.56%, #FFFDF1 103.1%);
+
+}
+
+.log-wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 7%;
+}
+
 .calculator{
-    margin-top: 7.5%;
-    margin-left: 20%;
-    width: 459px;
-    height: 750px;
+    margin-top: 7%;
+    width: 367.2px;
+    height: 600px;
     flex-shrink: 0;
     border-radius: 50px 50px 35px 35px;
     border: 3px solid rgba(6, 6, 6, 0.97);
     background: linear-gradient(160deg, #FBFBFB 6.56%, #FFFDF1 103.1%);
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-    transform: scale(0.8);
-    transform-origin: top left;
+   
 }
 
 .styled-input {
-    margin-top: 20px;
-    margin-left: 24px;
-    margin-right: 24px;
-    width: 405px; 
-    height: 115px; 
+    margin-top: 16px; /* Reduced from 20px */
+    margin-left: 19px; /* Reduced from 24px */
+    margin-right: 19px; /* Reduced from 24px */
+    width: 324px; /* No change */
+    height: 92px; /* No change */
     flex-shrink: 0; 
     border-radius: 25px; 
     border: 3px solid #000; 
     background: rgba(217, 217, 217, 0.00); 
-    box-sizing: border-box; 
+    box-sizing: border-box;
+    
 }
 
-.first_container{
+.first_container {
     display: flex;
-    gap: 14px;
-    margin-top: 34px;
-    margin-left: 23px;
-    margin-right: 25px;
-    margin-bottom: 20px;
-   
+    gap: 11px; /* Reduced from 14px */
+    margin-top: 25px; /* Reduced from 34px */
+    margin-left: 18px; /* Reduced from 23px */
+    margin-right: 20px; /* Reduced from 25px */
+    margin-bottom: 10px; /* Reduced from 20px */
 }
+
 
 .second_container{
     display: flex;
-    gap: 14px;
-    margin-top: 24px;
-    margin-left: 23px;
-    margin-right: 25px;
-    margin-bottom: 20px;
-   
+    gap: 11px; 
+    margin-top: 20px; 
+    margin-left: 18px; 
+    margin-right: 20px; 
+    margin-bottom: 10px; 
 }
 
 .third_container{
     display: flex;
-    gap: 14px;
-    margin-top: 24px;
-    margin-left: 23px;
-    margin-right: 25px;
-    margin-bottom: 20px;
+    gap: 11px; 
+    margin-top: 20px; 
+    margin-left: 18px; 
+    margin-right: 20px; 
+    margin-bottom: 10px; 
    
 }
 
 .forth_container{
     display: flex;
-    gap: 14px;
-    margin-top: 24px;
-    margin-left: 23px;
-    margin-right: 25px;
-    margin-bottom: 20px;
+    gap: 11px; 
+    margin-top: 20px; 
+    margin-left: 18px; 
+    margin-right: 20px; 
+    margin-bottom: 10px; 
    
 }
 
 .fifth_container{
     display: flex;
-    gap: 14px;
-    margin-top: 24px;
-    margin-left: 23px;
-    margin-right: 25px;
-    margin-bottom: 20px;
+    gap: 11px; 
+    margin-top: 20px; 
+    margin-left: 18px; 
+    margin-right: 20px; 
+    margin-bottom: 16px; 
    
 }
 
-#button{
-    width: 92px;
-    height: 87px;
-    flex-shrink: 0;
-    border-radius: 25px;
-    border: 3px solid #000;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.50);
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 35px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    color: #000000;
-    
-}
-
-#button-zero{
-    width: 192px;
-    height: 87px;
-    flex-shrink: 0;
-    border-radius: 25px;
-    border: 3px solid #000;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.50);
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 35px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    color: #000000;
-    
-}
-
-/*Classes*/
 .ac {
     background-color: rgba(251, 197, 0, 0.75); /* Transparent background */
 }
@@ -116,3 +149,34 @@
     background-color: rgba(255, 43, 43, 0.75); /* Transparent background */
 }
 
+/*Id's*/
+#button{
+    width: 73.6px;
+    height: 69.6px;
+    flex-shrink: 0;
+    border-radius: 25px;
+    border: 3px solid #000;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.50);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 35px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    color: #000000;
+    
+}
+
+#button-zero {
+    width: 154px; /* Reduced from 192px */
+    height: 70px; /* Reduced from 87px */
+    flex-shrink: 0;
+    border-radius: 25px;
+    border: 3px solid #000;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.50);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 35px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    color: #000000;
+}
