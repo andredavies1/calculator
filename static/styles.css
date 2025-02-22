@@ -141,16 +141,16 @@
    
 }
 
-.ac {
+#ac {
     background-color: rgba(251, 197, 0, 0.75); /* Transparent background */
 }
 
-.equal {
+#equal {
     background-color: rgba(255, 43, 43, 0.75); /* Transparent background */
 }
 
-/*Id's*/
-#button{
+
+.button{
     width: 73.6px;
     height: 69.6px;
     flex-shrink: 0;
@@ -166,7 +166,7 @@
     
 }
 
-#button-zero {
+.button.button-zero {
     width: 154px; /* Reduced from 192px */
     height: 70px; /* Reduced from 87px */
     flex-shrink: 0;
