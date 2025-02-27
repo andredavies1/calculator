@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", function () {
     let equation = ""; // Store the user input
     let currentInput = ""; //Current input
     let operatorUsed = false; //Check if Operator was used
+    let logBody = document.querySelector(".log-display")
+    let resetButton = document.querySelector (".reset")
 
 
     buttons.forEach(button => {
@@ -66,11 +68,28 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(response => response.json())
         .then(data => {
             if (data.result !== undefined){
-                display.value = parseFloat(data.result).toFixed(10).replace(/\.0+$/, '');
+                //format 3 decimal places
+                let result = parseFloat(data.result).toFixed(3).replace(/\.0+$/, '');
+                display.value = result;
+                // Update log with the original equation and formatted result
+                addToLog (equation.replace(/\*/g, "x").replace(/\//g, "÷"), result);
             } else {
                 display.value = "Error"
             }
         })
         .catch(error => console.error("Error:", error));
     }
+
+    function addToLog(expression, result) {
+        let entry = document.createElement("div")
+        entry.classList.add("log-entry")
+        entry.innerHTML = `<span> ${expression} = ${result} </span>`;
+        logBody.appendChild(entry);
+    }
+
+    resetButton.addEventListener("click", function(){
+        logBody.innerHTML = "";
+    })
+
 });
+
