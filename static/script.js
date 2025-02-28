@@ -1,50 +1,58 @@
 document.addEventListener("DOMContentLoaded", function () {
-    let display = document.getElementById("display");  // connect with html
+    let display = document.getElementById("display");
     let buttons = document.querySelectorAll(".button");
-    let equation = ""; // Store the user input
-    let currentInput = ""; //Current input
-    let operatorUsed = false; //Check if Operator was used
-    let logBody = document.querySelector(".log-display")
-    let resetButton = document.querySelector (".reset")
-
+    let equation = "";  // This will hold the entire equation
+    let currentInput = "";  // This will hold the current input
+    let operatorUsed = false; // Whether the operator has been used
+    let logBody = document.querySelector(".log-display");
+    let resetButton = document.querySelector(".reset");
+    let lastResult = 0;  // To store the last result for proper calculation
+    const operatorButtons = document.querySelectorAll(".operator");
 
     buttons.forEach(button => {
-        button.addEventListener("click", function () {
+        button.addEventListener("click", function (event) {
+            event.preventDefault();
             let value = this.value;
         
             if (value === "=") {
-                sendEquationToFlask(equation);                                          // Send Equation to Flask
-            } else if (value === "AC") {                                                // Resets calculator
+                sendEquationToFlask(equation);
+                removeOperatorHighlight();
+                currentInput = "";  // Reset currentInput after calculation
+            } else if (value === "AC") {
                 equation = "";
                 currentInput = "";
                 operatorUsed = false;
-                display.value = "0";                                                    // Fix: Set display to "0"
-            } else if (value === "+/-"){
+                lastResult = 0;
+                display.value = "0";
+                removeOperatorHighlight();
+            } else if (value === "+/-") {
                 if (currentInput) {
-                    if (currentInput.startsWith("-")){
-                        currentInput = currentInput.slice(1);                           // remove negative
-                    } else{
-                        currentInput = "-" + currentInput;                          // add negative
-                    }
-                    let parts = equation.split(/[\+\-\x\÷]/);                       //split operators
-                    parts[parts.length -1] = currentInput                               // update last number
-                    equation = equation.replace(/[\d\.]+$/, currentInput);              // replace last number in the equation
+                    currentInput = currentInput.startsWith("-") ? currentInput.slice(1) : "-" + currentInput;
+                    let parts = equation.split(/[\+\-\x\÷]/);
+                    parts[parts.length - 1] = currentInput;
+                    equation = equation.replace(/[\d\.]+$/, currentInput);
                     display.value = currentInput;
                 }
-            } 
-            else if ("+-x÷".includes(value)){
-                if (operatorUsed){
-                    equation = equation.slice(0, -1) + value;                           // replace last character and adds the current value of the button.
-                }else{
-                    equation += value
-                    operatorUsed = true
+            } else if ("+-x÷%".includes(value)) {
+                highlightOperator(this);
+
+                // If there's a current input, add it to the equation before the operator
+                if (currentInput) {
+                    equation = currentInput;
+                    currentInput = "";
                 }
+
+                // Append the operator to the equation
+                equation += value;
+                operatorUsed = true;
                 display.value = value;
-            }else {
+            } else {
+                // Handling number input
                 if (operatorUsed) {
                     currentInput = value;
                     operatorUsed = false;
-                } else{
+                    removeOperatorHighlight();
+                } else {
                     currentInput += value;
                 }
                 equation += value;
@@ -54,11 +62,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     function sendEquationToFlask(equation) {
+        // Replace operator symbols for Flask
+        equation = equation.replace(/÷/g, '/').replace(/x/g, "*");
 
-        equation = equation.replace(/÷/g, '/').replace(/x/g, "*")
-
-
-        fetch('/calculate', {                                                               // Flask route
+        fetch('/calculate', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -67,29 +74,52 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then(response => response.json())
         .then(data => {
-            if (data.result !== undefined){
-                //format 3 decimal places
+            if (data.result !== undefined) {
                 let result = parseFloat(data.result).toFixed(3).replace(/\.0+$/, '');
                 display.value = result;
-                // Update log with the original equation and formatted result
-                addToLog (equation.replace(/\*/g, "x").replace(/\//g, "÷"), result);
+                addToLog(equation.replace(/\*/g, "x").replace(/\//g, "÷"), result);
+                equation = result;  // Set equation to the result for the next operation
+                currentInput = result;  // Update currentInput with the result
             } else {
-                display.value = "Error"
+                display.value = "Error";
             }
         })
         .catch(error => console.error("Error:", error));
     }
 
     function addToLog(expression, result) {
-        let entry = document.createElement("div")
-        entry.classList.add("log-entry")
-        entry.innerHTML = `<span> ${expression} = ${result} </span>`;
+        let entry = document.createElement("div");
+        entry.classList.add("log-entry");
+        
+        // Log in a clean format
+        if (lastResult !== 0) {
+            // If there's a last result, we need to extract the operator and the current input
+            let operator = expression.match(/[\+\-x÷]/)[0]; // Extract the operator
+            let currentNumber = expression.split(/[\+\-x÷]/).pop(); // Get the last number
+            entry.innerHTML = `${lastResult} ${operator} ${currentNumber} = ${result}`;
+        } else {
+            // First result logged
+            entry.innerHTML = `${expression} = ${result}`;
+        }
+        
         logBody.appendChild(entry);
+        lastResult = parseFloat(result);  // Update lastResult after logging
     }
 
-    resetButton.addEventListener("click", function(){
+    resetButton.addEventListener("click", function () {
         logBody.innerHTML = "";
-    })
+        display.value = "0";
+        lastResult = 0;  // Reset lastResult on reset
+    });
 
+    function highlightOperator(button) {
+        operatorButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+    }
+
+    function removeOperatorHighlight() {
+        setTimeout(() => {
+            operatorButtons.forEach(btn => btn.classList.remove('active'));
+        }, 100);
+    }
 });
-
