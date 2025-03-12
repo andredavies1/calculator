@@ -19,5 +19,5 @@ def calculate():
 
 
 if __name__ == "__main__": #Initiate Flask/ run script.
-    app.run(debug=True)
+    app.run()
 
